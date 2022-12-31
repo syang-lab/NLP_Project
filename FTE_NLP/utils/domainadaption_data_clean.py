@@ -1,9 +1,8 @@
 import re
-from nltk.stem.porter import PorterStemmer
 from os.path import exists
 
 
-def clean_domain_adaption(input_file_name, output_file_name):
+def data_clean(input_file_name, output_file_name):
     """"
     clean domain adaption file
     1.load dataset
@@ -16,7 +15,7 @@ def clean_domain_adaption(input_file_name, output_file_name):
             output_content = list()
             for line in input_raw:
                 if not line.isspace():
-                    line = re.sub(r"[?|!+?|:|(|)]|\\|-|/.*?/|http\S+", "", line.lower())
+                    line = re.sub(r"[?|!+?|:|(|)]|\\|-|/.*?/|http\S+|www\S+", "", line.lower())
                     output_content.append(line)
     except FileNotFoundError as error:
         msg = "Sorry, the file" + input_file_name + "does not exist."
@@ -34,4 +33,4 @@ if __name__ == "__main__":
     input_file_name = "../data/raw_EDT/Domain_adapation/train_test.txt"
     output_file_name = "../data/raw_EDT/Domain_adapation/train_test_cleaned.txt"
 
-    clean_domain_adaption(input_file_name, output_file_name)
+    data_clean(input_file_name, output_file_name)

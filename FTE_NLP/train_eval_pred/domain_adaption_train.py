@@ -1,8 +1,8 @@
 import torch
 import math
 from transformers import AutoTokenizer
-from FTE_NLP.model.dataloader import whole_word_masking_data_collator
-from FTE_NLP.model.dataloader import data_preprocess
+from FTE_NLP.model.domain_adaption_dataloader import whole_word_masking_data_collator
+from FTE_NLP.model.domain_adaption_dataloader import data_preprocess
 from torch.utils.data import DataLoader
 from transformers import AutoModelForMaskedLM
 from torch.optim import AdamW
@@ -90,6 +90,5 @@ for epoch in range(num_train_epochs):
     print(f">>> Epoch {epoch}: Perplexity: {perplexity}")
 
 
-
-
-
+model_save_filename = "../experiments/models/distilbert-base-uncased-pretrained"
+model.save_pretrained(model_save_filename)
