@@ -1,10 +1,10 @@
 import torch
 import math
 from transformers import AutoTokenizer
+from transformers import AutoModelForMaskedLM
 from FTE_NLP.model.domain_adaption_dataloader import whole_word_masking_data_collator
 from FTE_NLP.model.domain_adaption_dataloader import data_preprocess
 from torch.utils.data import DataLoader
-from transformers import AutoModelForMaskedLM
 from torch.optim import AdamW
 from transformers import get_scheduler
 from tqdm.auto import tqdm
@@ -22,6 +22,7 @@ data_dev = data_preprocess(dev_file, "dev", tokenizer, chunk_size=64)
 
 batch_size = 64
 wwm_prob = 0.15
+
 
 train_dataloader = DataLoader(
     data_train["train"],
@@ -55,20 +56,18 @@ lr_scheduler = get_scheduler(
 )
 
 #3. train model
-progress_bar = tqdm(range(num_training_steps))
-
+progress_bar = tqdm(range(num_train_epochs))
 for epoch in range(num_train_epochs):
     # training
     model.train()
-
     for batch in train_dataloader:
         optimizer.zero_grad()
         outputs = model(**batch)
         loss = outputs.loss
         loss.backward()
         optimizer.step()
+
         lr_scheduler.step()
-        progress_bar.update(1)
 
     # evaluation
     model.eval()
@@ -82,6 +81,7 @@ for epoch in range(num_train_epochs):
 
     losses = torch.cat(losses)
     losses = losses[: len(eval_dataloader)]
+
     try:
         perplexity = math.exp(torch.mean(losses))
     except OverflowError:
@@ -90,5 +90,5 @@ for epoch in range(num_train_epochs):
     print(f">>> Epoch {epoch}: Perplexity: {perplexity}")
 
 
-model_save_filename = "../experiments/models/distilbert-base-uncased-pretrained"
-model.save_pretrained(model_save_filename)
+#model_save_filename = "../experiments/models/distilbert-base-uncased-pretrained"
+#model.save_pretrained(model_save_filename)

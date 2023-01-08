@@ -14,7 +14,6 @@ def postprocess_text(generated, labels):
     labels = ["\n".join(nltk.sent_tokenize(label)) for label in labels]
     return generated, labels
 
-
 def postprocess_event(preds, labels, ids2tags):
     labels_tag = list()
     for label in labels:

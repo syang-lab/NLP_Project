@@ -1,0 +1,8 @@
+# 1. "distilbert-base-uncased" event detection with domain adaption.
+# 2. "distilbert-base-uncased" event detection without domain adaption. Done
+# 2.1 validation
+# 2.2 train test validation
+# 2.3 add args, reformat code for deployment on AWS
+# Done
+# 4. "google/mt5-small" for summarization with domain adaption.
+# 5. "google/mt5-small" for summarization without domain adaption. Done

@@ -1,3 +1,13 @@
 # Default ignored files
 .idea
+./FAQ_NLP/
+./FSUM_NLP/
 ./FTE_NLP/test.py
+./FTE_NLP/data/
+./FTE_NLP/experiments/models/
+./FTE_NLP/model/__pycache__/domain_adaption_dataloader.cpython-38.pyc
+./FTE_NLP/model/__pycache__/event_dataloader.cpython-38.pyc
+./FTE_NLP/model/__pycache__/event_detection_dataset.cpython-38.pyc
+./FTE_NLP/model/__pycache__/event_detection_model.cpython-38.pyc
+./FTE_NLP/model/__pycache__/summarizaton_dataloader.cpython-38.pyc
+./FTE_NLP/utils/__pycache__/

@@ -131,5 +131,8 @@ if __name__ == "main":
                                 fn_kwargs={"tokenizer": tokenizer, "max_input_length": 512, "max_label_length": 30})
 
     data_small = drop_column(data_small, ["text", "title"])
-
     #print(data_small)
+
+    # TODO: understand the model
+    # Save Model
+    # Training domain adaption, and event detection without domain adaption
