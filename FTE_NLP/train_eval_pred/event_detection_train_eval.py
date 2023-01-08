@@ -9,43 +9,40 @@ from FTE_NLP.model.event_detection_dataset import *
 from FTE_NLP.model.event_detection_model import *
 from FTE_NLP.utils.early_stop import *
 
-
 # set device
 device = 'cuda' if cuda.is_available() else 'cpu'
 
 # models path
-check_point_model_file = '../experiments/models/event_detection/distilbert/'
+save_check_point_model = '../experiments/models/event_detection/distilbert/'
 
 # load file
 json_filename = '../data/raw_EDT/Event_detection/dev_test.json'
 with open(json_filename) as data_file:
     test_data = json.loads(data_file.read())
 
-
 # load training, validation and test data
+pre_trained_model = 'distilbert-base-cased'
 tokenizer = AutoTokenizer.from_pretrained('distilbert-base-cased', use_fast=True)
 all_dataset = event_detection_data(test_data, tokenizer, max_len=512)
 
-train_dataset, eval_dataset = random_split(all_dataset,[0.7,0.3],generator=torch.Generator().manual_seed(42))
+train_dataset, eval_dataset = random_split(all_dataset, [0.7, 0.3], generator=torch.Generator().manual_seed(42))
 
 # pass data to dataloader
-train_params = {'batch_size': 2, 'shuffle': True, 'num_workers': 0 }
+train_params = {'batch_size': 2, 'shuffle': True, 'num_workers': 0}
 train_loader = DataLoader(train_dataset, **train_params)
 
-eval_params = {'batch_size': 2, 'shuffle': True, 'num_workers': 0 }
+eval_params = {'batch_size': 2, 'shuffle': True, 'num_workers': 0}
 eval_loader = DataLoader(eval_dataset, **train_params)
 
 # initialize model
-model_checkpoint="distilbert-base-uncased"
-
-model = DistillBERTClass(model_checkpoint)
+checkpoint_model = '../experiments/models/domain_adaption/distilbert/'
+model = DistillBERTClass(checkpoint_model)
 
 # define loss function
 loss_function = torch.nn.CrossEntropyLoss()
 
 # define optimizer
 optimizer = torch.optim.Adam(params=model.parameters(), lr=1e-05)
-
 
 # define schedular
 num_train_epochs = 3
@@ -54,9 +51,8 @@ lr_scheduler = get_scheduler(
     "linear",
     optimizer=optimizer,
     num_warmup_steps=0,
-    num_training_steps=num_train_epochs*len(train_loader),
+    num_training_steps=num_train_epochs * len(train_loader),
 )
-
 
 progress_bar = tqdm(range(num_train_epochs))
 for epoch in range(num_train_epochs):
@@ -128,7 +124,7 @@ for epoch in range(num_train_epochs):
     # check early stopping
     check_early_stop = earlystop(train_loss, eval_loss)
     if check_early_stop.early_stop:
-        torch.save(model, check_point_model_file+"early_stop")
+        torch.save(model, save_check_point_model + "early_stop")
         break
 
     # save check point
@@ -137,16 +133,5 @@ for epoch in range(num_train_epochs):
             'epoch': epoch,
             'model_state_dict': model.state_dict(),
             'optimizer_state_dict': optimizer.state_dict(),
-            'learning_rate_schedular':lr_scheduler.state_dict()
-        }, check_point_model_file+"epoch_"+str(epoch))
-
-
-
-
-
-
-
-
-
-
-
+            'learning_rate_schedular': lr_scheduler.state_dict()
+        }, save_check_point_model + "epoch_" + str(epoch))

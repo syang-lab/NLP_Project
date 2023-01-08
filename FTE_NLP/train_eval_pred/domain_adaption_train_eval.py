@@ -14,7 +14,7 @@ from FTE_NLP.utils.early_stop import *
 device = 'cuda' if cuda.is_available() else 'cpu'
 
 # models path
-check_point_model_file = '../experiments/models/domain_adaption/distilbert/'
+save_check_point_model = '../experiments/models/domain_adaption/distilbert/'
 
 # load file
 json_filename = '../data/raw_EDT/Event_detection/dev_test.json'
@@ -117,11 +117,11 @@ for epoch in range(num_train_epochs):
     # check early stopping
     check_early_stop = earlystop(train_loss, eval_loss)
     if check_early_stop.early_stop:
-        model.save_pretrained(check_point_model_file+"early_stop")
+        model.save_pretrained(save_check_point_model+"early_stop")
         break
 
     # save check point
     if epoch != 0 and epoch % 100 == 0:
-        model.save_pretrained(check_point_model_file+"epoch_"+str(epoch))
+        model.save_pretrained(save_check_point_model+"epoch_"+str(epoch))
 
-model.save_pretrained(check_point_model_file)
+model.save_pretrained(save_check_point_model)

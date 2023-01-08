@@ -1,12 +1,10 @@
 import torch
-from transformers import DistilBertModel
 from transformers import AutoModel
 
 class DistillBERTClass(torch.nn.Module):
-    def __init__(self, model_checkpoint):
+    def __init__(self, checkpoint_model):
         super(DistillBERTClass, self).__init__()
-        #self.pre_trained_model = DistilBertModel.from_pretrained(model_checkpoint)
-        self.pre_trained_model = AutoModel.from_pretrained(model_checkpoint)
+        self.pre_trained_model = AutoModel.from_pretrained(checkpoint_model)
         self.linear = torch.nn.Linear(768, 768)
         self.relu = torch.nn.ReLU()
         self.dropout = torch.nn.Dropout(0.3)
