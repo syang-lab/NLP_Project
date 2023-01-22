@@ -95,6 +95,7 @@ for epoch in range(num_train_epochs):
     result = {k: round(v, 4) for k, v in result.items()}
     print(f"Epoch {epoch}:", result)
 
+
 # save model
-model_save_filename = "../experiments/models/mt5-small-pretrained"
+model_save_filename = "../experiments/model_bucket/mt5-small-pretrained"
 model.save_pretrained(model_save_filename)

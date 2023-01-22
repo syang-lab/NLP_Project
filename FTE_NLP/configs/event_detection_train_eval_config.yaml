@@ -1,0 +1,6 @@
+DATALOADER:
+  Train_Eval_Filename: 'FTE_NLP/data/raw_EDT/Event_detection/dev_test.json'
+
+TRAIN_EVAL:
+  Num_Train_Epochs: 3
+  Save_Check_Point_Model: 'FTE_NLP/experiments/model_bucket/event_detection/distilbert/'
