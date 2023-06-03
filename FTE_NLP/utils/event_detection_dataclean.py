@@ -82,10 +82,10 @@ def add_text_tagid(tags_selected, tags2ids, ids2tags):
 
     return tags_chunk, tagids_chunk
 
-
 def save_json(json_filename, texts_selected, tags_selected, tagids_selected, tags_chunk, tagids_chunk):
     total_length = len(texts_selected)
     save_datalist = list()
+    total_length = 32
     for index in range(total_length):
         item_dict = dict()
         item_dict["text"] = texts_selected[index]
@@ -100,7 +100,6 @@ def save_json(json_filename, texts_selected, tags_selected, tagids_selected, tag
 
     return
 
-
 def main(data_filename, json_filename, tags2ids_name, ids2tags_name):
     texts_selected, tags_selected, tags_all = load_texttag_file(data_filename)
     tags2ids, ids2tags = tag_ids_map(tags_all, tags2ids_name, ids2tags_name)
@@ -112,8 +111,8 @@ def main(data_filename, json_filename, tags2ids_name, ids2tags_name):
 
 
 if __name__ == "__main__":
-    test_raw = "../data/raw_EDT/Event_detection/event.txt"
-    test_save = '../data/raw_EDT/Event_detection/event.json'
+    test_raw = "../data/raw_EDT/Event_detection/dev.txt"
+    test_save = '../data/raw_EDT/Event_detection/dev.json'
     tags2ids_name = "../data/raw_EDT/Event_detection/tags2ids.json"
     ids2tags_name = "../data/raw_EDT/Event_detection/ids2tags.json"
     main(test_raw, test_save, tags2ids_name, ids2tags_name)

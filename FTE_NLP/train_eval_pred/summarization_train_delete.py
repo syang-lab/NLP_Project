@@ -5,8 +5,9 @@ import evaluate
 from FTE_NLP.model.summarizaton_dataloader import *
 from FTE_NLP.utils.post_process import *
 
+
 # load dataset
-data_file_name = "../data/raw_EDT/Trading_benchmark/evaluate_news.json"
+data_file_name = "../data/raw_EDT/Trading_benchmark/evaluate_news_test.json"
 _, data_small = json2dataset(data_file_name)
 # clean dataset
 column_names = ['pub_time', 'labels']
@@ -33,6 +34,7 @@ data_small = drop_column(data_small, ["text", "title"])
 data_collator = DataCollatorForSeq2Seq(tokenizer, model)
 train_dataloader, test_dataloader, valid_dataloader = dataset_dataloader(data_small, data_collator, model, tokenizer, batch_size=8)
 
+
 # define optimizer
 from torch.optim import AdamW
 optimizer = AdamW(model.parameters(), lr=2e-5)
@@ -53,7 +55,6 @@ lr_scheduler = get_scheduler(
 
 # define evaluation matrix
 rouge_score = evaluate.load("rouge")
-
 
 # training and evaluate
 progress_bar = tqdm(range(num_training_steps))
@@ -80,6 +81,7 @@ for epoch in range(num_train_epochs):
             labels = batch["labels"]
             labels = labels.numpy()
 
+            print(tokenizer.pad_token_id)
             labels = np.where(labels != -100, labels, tokenizer.pad_token_id)
             decoded_labels = tokenizer.batch_decode(labels, skip_special_tokens=True)
 
@@ -97,5 +99,5 @@ for epoch in range(num_train_epochs):
 
 
 # save model
-model_save_filename = "../experiments/model_bucket/mt5-small-pretrained"
-model.save_pretrained(model_save_filename)
+# model_save_filename = "../experiments/model_bucket/mt5-small-pretrained"
+# model.save_pretrained(model_save_filename)

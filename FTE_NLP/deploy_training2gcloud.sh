@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-export PROJECT_ID=$(gcloud config list project --format "value(core.project)")
-export REGION=us-west1
-
 # create bucket #
+export PROJECT_ID=$(gcloud config list project --format "value(core.project)")
 export BUCKET_NAME=${PROJECT_ID}-aiplatform
 echo $BUCKET_NAME
+
+export REGION=us-west1
 gsutil mb -l $REGION gs://$BUCKET_NAME
 
 

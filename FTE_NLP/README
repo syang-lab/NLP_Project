@@ -17,6 +17,8 @@ docker create -it --name container_nlp_test sagemaker-nlp:01.2023_V0
 docker start container_nlp_test
 docker exec -it container_nlp_test bash
 exit
+docker images
+docker container ls -all
 docker stop container_nlp_test
 docker rm container_nlp_test
 docker rmi sagemaker-nlp:01.2023_V0
@@ -27,5 +29,12 @@ docker container prune
 
 example document
 https://cloud.google.com/ai-platform/training/docs/train-ml-model-custom-containers
+
+
+
+#fine-tunning
+#1.encoder-masked input
+#2.decoder-input
+#3.decoder-output: masked input
 
 

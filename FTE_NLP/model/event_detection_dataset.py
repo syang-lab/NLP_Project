@@ -4,6 +4,7 @@ from torch.utils.data import Dataset
 from collections import defaultdict
 
 
+
 class event_detection_data(Dataset):
     def __init__(self, raw_data, tokenizer, max_len, domain_adaption=False, wwm_prob=0.1):
         self.len = len(raw_data)

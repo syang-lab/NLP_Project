@@ -1,4 +1,5 @@
 import nltk
+#nltk.download('punkt')
 
 def postprocess_text(generated, labels):
     """

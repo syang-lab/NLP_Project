@@ -4,7 +4,7 @@ path_root = Path(__file__).parents[2]
 sys.path.append(str(path_root))
 import os
 import argparse
-from FTE_NLP.train_eval_pred.domain_adaption_train_eval import *
+from FTE_NLP.train_eval_pred.domain_adaptation_train_eval import *
 from FTE_NLP.utils.domain_adaption_train_eval_default_config import *
 from FTE_NLP.utils.save_model import *
 
@@ -28,7 +28,7 @@ def parse_args():
          type=str,
          required=True,
          default='project-nlp-375001-aiplatform',
-         help="directory where model checkpoints, logs and other artefacts are saved."
+         help="directory where model checkpoints, logs and other artifacts are saved."
     )
 
     return parser.parse_args()
